@@ -8,8 +8,8 @@ class Block {
   constructor(difficulty = 1, previousHash = null) {
     this.difficulty = difficulty;
     this.message = this.calculateHash();
-    this.nonce = this.message.nonce
-    this.message = this.message.message
+    this.nonce = this.message.nonce;
+    this.message = this.message.message;
 
     this.block = {
       date: Date.now(),
@@ -23,14 +23,14 @@ class Block {
     let message;
     let nonce;
     let start = Date.now();
+
     for (let i = 0; Date.now() - start < 600_000; i++) {
-      nonce = Date.now().toString();
+      nonce = (Date.now() / 2 + i ** 2).toString();
       message = hash.sha256().update(nonce).digest("hex");
-      
+
       if (
         message.substring(0, this.difficulty) == "0".repeat(this.difficulty)
       ) {
-        
         this.message = message;
         this.nonce = nonce;
         return {
@@ -44,7 +44,5 @@ class Block {
     return this.block;
   }
 }
-
-
 
 export default Block;
